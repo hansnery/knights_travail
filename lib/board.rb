@@ -5,6 +5,8 @@ class Board
   require_relative 'tile'
   require 'colorize'
 
+  attr_accessor :columns
+
   def initialize(size = 8, temp = [])
     @board = []
     size.times do
@@ -64,4 +66,4 @@ end
 
 # Board.new
 board = Board.new
-board.knight_position(0, 0)
+board.knight_position(4, 3)
