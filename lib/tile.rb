@@ -2,13 +2,9 @@
 
 # :nodoc:
 class Tile
-  attr_accessor :tile
+  attr_accessor :data
 
-  def initialize(tile = 'x')
-    @tile = tile
+  def initialize(data = '  ')
+    @data = data
   end
-
-  # def tile
-  #   puts @tile
-  # end
 end

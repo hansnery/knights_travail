@@ -6,8 +6,10 @@ class Board
   require 'colorize'
 
   def initialize(size = 8)
-    @size = size
-    @board = Array.new(size * size, '  ')
+    @board = []
+    (size * size).times do
+      @board << Tile.new
+    end
     print_board
   end
 
@@ -37,20 +39,20 @@ class Board
   end
 
   def to_white_background(string)
-    string.colorize(color: :black, background: :white)
+    string.data.colorize(color: :black, background: :white)
   end
 
   def to_black_background(string)
-    string.colorize(color: :white, background: :black)
+    string.data.colorize(color: :white, background: :black)
   end
 
   def modify_array(index)
-    @board[index] = '♘ '
+    @board[index].data = '♘ '
     puts "\n"
     print_board
   end
 end
 
-Board.new
-# board = Board.new
-# board.modify_array(21)
+# Board.new
+board = Board.new
+board.modify_array(21)

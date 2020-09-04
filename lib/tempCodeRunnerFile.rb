@@ -1,1 +1,3 @@
-def print_board
+@board[index].data = '♘ '
+    puts "\n"
+    print_board
