@@ -2,9 +2,10 @@
 
 # :nodoc:
 class Tile
-  attr_accessor :data
+  attr_accessor :data, :visited
 
-  def initialize(data = '  ')
+  def initialize(data = '  ', visited = false)
     @data = data
+    @visited = visited
   end
 end

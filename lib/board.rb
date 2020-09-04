@@ -5,25 +5,36 @@ class Board
   require_relative 'tile'
   require 'colorize'
 
-  def initialize(size = 8)
+  def initialize(size = 8, temp = [])
     @board = []
-    (size * size).times do
-      @board << Tile.new
+    size.times do
+      size.times do
+        temp << Tile.new
+      end
+      @board << temp
+      temp = []
     end
+    @columns = @board.transpose
     print_board
   end
 
-  def print_board(pos = 1)
-    @board.each_with_index do |_, index|
-      if white_tile?(index)
-        print to_white_background(@board[index])
-      else
-        print to_black_background(@board[index])
+  def print_board(pos = 8)
+    @columns.each_with_index do |sub_array, idx|
+      sub_array.each_with_index do |_, index|
+        print_black_and_white(sub_array, idx, index)
+        if index == 7
+          puts "|#{pos}\n"
+          pos -= 1
+        end
       end
-      puts "|#{pos}\n" if breakline?(index)
-      pos += 1 if breakline?(index)
     end
     puts 'a b c d e f g h'
+  end
+
+  def print_black_and_white(sub_array, idx, index)
+    print to_black_background(sub_array[index]) if idx.odd? && index.even?
+    print to_white_background(sub_array[index]) if idx.odd? && index.odd? || idx.even? && index.even?
+    print to_black_background(sub_array[index]) if idx.even? && index.odd?
   end
 
   def breakline?(index)
@@ -32,9 +43,7 @@ class Board
   end
 
   def white_tile?(index)
-    white_tiles = [0, 2, 4, 6, 9, 11, 13, 15, 16, 18, 20,
-                   22, 25, 27, 29, 31, 32, 34, 36, 38, 41,
-                   43, 45, 47, 48, 50, 52, 54, 57, 59, 61, 63]
+    white_tiles = [0, 2, 4, 6]
     return true if white_tiles.include?(index)
   end
 
@@ -46,8 +55,8 @@ class Board
     string.data.colorize(color: :white, background: :black)
   end
 
-  def modify_array(index)
-    @board[index].data = '♘ '
+  def knight_position(width, height)
+    @columns[height][width].data = '♘ '
     puts "\n"
     print_board
   end
@@ -55,4 +64,4 @@ end
 
 # Board.new
 board = Board.new
-board.modify_array(21)
+board.knight_position(0, 0)
