@@ -5,7 +5,7 @@ class Board
   require_relative 'tile'
   require 'colorize'
 
-  attr_accessor :columns
+  attr_accessor :columns, :piece
 
   def initialize(size = 8, temp = [])
     @board = []
@@ -17,17 +17,15 @@ class Board
       temp = []
     end
     @columns = @board.transpose
-    print_board
   end
 
   def print_board(pos = 8)
+    puts "\n"
     @columns.each_with_index do |sub_array, idx|
       sub_array.each_with_index do |_, index|
         print_black_and_white(sub_array, idx, index)
-        if index == 7
-          puts "|#{pos}\n"
-          pos -= 1
-        end
+        puts "|#{pos}\n" if index == 7
+        pos -= 1 if index == 7
       end
     end
     puts 'a b c d e f g h'
@@ -57,13 +55,24 @@ class Board
     string.data.colorize(color: :white, background: :black)
   end
 
-  def knight_position(width, height)
-    @columns[height][width].data = '♘ '
-    puts "\n"
+  def position_piece(piece)
+    @piece = piece
+    @columns[8 - @piece.latitude][@piece.longitude - 1].data = @piece.data
+  end
+
+  def move_piece(new_longitude, new_latitude)
+    empty_tile
+    @piece.longitude = new_longitude
+    @piece.latitude = new_latitude
+    update_position(@piece.longitude, @piece.latitude)
     print_board
   end
-end
 
-# Board.new
-board = Board.new
-board.knight_position(4, 3)
+  def empty_tile
+    @columns[8 - @piece.latitude][@piece.longitude - 1].data = '  '
+  end
+
+  def update_position(longitude, latitude)
+    @columns[8 - latitude][longitude - 1].data = @piece.data
+  end
+end
