@@ -75,4 +75,11 @@ class Board
   def update_position(longitude, latitude)
     @columns[8 - latitude][longitude - 1].data = @piece.data
   end
+
+  def valid_move?(new_longitude, new_latitude)
+    @piece.possible_moves.each do |move|
+      return true if move[0] == (new_longitude - 1) && move[1] == (new_latitude - 1)
+    end
+    false
+  end
 end

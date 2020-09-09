@@ -22,13 +22,18 @@ class KnightsTravail
   def ask_input
     puts 'MOVE TO: '
     input = gets.chomp
+    check_input(input)
+  end
+
+  def check_input(input)
     case input
     when /^[a-hA-H]{1}[1-8]/
-      longitude = letter_to_longitude(input[0])
-      latitude = input[1].to_i
-      @board.move_piece(longitude, latitude)
-    else
-      puts 'NOT OK!'
+      if @board.valid_move?(letter_to_longitude(input[0]), input[1].to_i)
+        @board.move_piece(letter_to_longitude(input[0]), input[1].to_i)
+      else
+        puts 'Wrong input! Try again!'
+        ask_input
+      end
     end
   end
 

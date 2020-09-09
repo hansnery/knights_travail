@@ -1,1 +1,1 @@
-board
+def check_input(input)

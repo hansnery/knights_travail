@@ -1,1 +1,1 @@
-@piece.data
+true
