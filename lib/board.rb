@@ -5,7 +5,7 @@ class Board
   require_relative 'tile'
   require 'colorize'
 
-  attr_accessor :columns, :piece
+  attr_accessor :columns
 
   def initialize(size = 8, temp = [])
     @board = []
@@ -64,6 +64,7 @@ class Board
     empty_tile
     @piece.longitude = new_longitude
     @piece.latitude = new_latitude
+    # p @piece
     update_position(@piece.longitude, @piece.latitude)
     print_board
   end
@@ -78,7 +79,7 @@ class Board
 
   def valid_move?(new_longitude, new_latitude)
     @piece.possible_moves.each do |move|
-      return true if move[0] == (new_longitude - 1) && move[1] == (new_latitude - 1)
+      return true if move[0] == (new_longitude - @piece.longitude) && move[1] == (new_latitude - @piece.latitude)
     end
     false
   end
