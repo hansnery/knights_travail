@@ -9,6 +9,6 @@ class Knight
     @longitude = longitude
     @latitude = latitude
     @data = '♘ '
-    @possible_moves = [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2]]
+    @possible_moves = [[1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]]
   end
 end

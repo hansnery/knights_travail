@@ -1,1 +1,1 @@
-true
+def update_position(longitude, latitude)

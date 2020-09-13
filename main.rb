@@ -5,10 +5,10 @@ class KnightsTravail
   require_relative 'lib/board'
   require_relative 'lib/knight'
 
-  def initialize(longitude = 5, latitude = 5)
+  def initialize(initial_longitude = 1, initial_latitude = 4)
     welcome
     @board = Board.new
-    @knight = Knight.new(longitude, latitude)
+    @knight = Knight.new(initial_longitude, initial_latitude)
     @board.position_piece(@knight)
     @board.print_board
     ask_input
@@ -20,24 +20,22 @@ class KnightsTravail
     puts "\nType in the knight's destination using algebraic notation (eg: b3)."
   end
 
-  def ask_input(input = '')
-    while input != 'exit'
-      puts 'MOVE TO: '
-      input = gets.chomp
-      check_input(input)
-      p @knight if input == 'info'
-    end
+  def ask_input
+    puts 'MOVE TO: '
+    input = gets.chomp
+    @longitude = letter_to_longitude(input[0])
+    @latitude = input[1].to_i
+    check_input(input)
   end
 
   def check_input(input)
     case input
     when /^[a-hA-H]{1}[1-8]/
-      if @board.valid_move?(letter_to_longitude(input[0]), input[1].to_i)
-        @board.move_piece(letter_to_longitude(input[0]), input[1].to_i)
-      else
-        puts 'Wrong input! Try again!'
-        ask_input
-      end
+      @board.set_target(@longitude, @latitude)
+      # @board.move_piece(@longitude, @latitude)
+    else
+      puts 'Wrong input! Try again!'
+      ask_input
     end
   end
 
