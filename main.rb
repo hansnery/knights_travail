@@ -4,12 +4,14 @@
 class KnightsTravail
   require_relative 'lib/board'
   require_relative 'lib/knight'
+  require_relative 'lib/board_methods'
+  include BoardMethods
 
   def initialize(initial_longitude = 1, initial_latitude = 4)
     welcome
     @board = Board.new
     @knight = Knight.new(initial_longitude, initial_latitude)
-    @board.position_piece(@knight)
+    position_piece(@knight)
     @board.print_board
     ask_input
   end
@@ -31,7 +33,7 @@ class KnightsTravail
   def check_input(input)
     case input
     when /^[a-hA-H]{1}[1-8]/
-      @board.set_target(@longitude, @latitude)
+      set_target(@longitude, @latitude)
       # @board.move_piece(@longitude, @latitude)
     else
       puts 'Wrong input! Try again!'
@@ -39,11 +41,21 @@ class KnightsTravail
     end
   end
 
-  def letter_to_longitude(input_letter)
-    board_letters = ('a'..'h').to_a
-    board_letters.each_with_index do |board_letter, index|
-      return index + 1 if input_letter == board_letter
+  def search_route
+    while @target.visited == false
+      @piece.possible_moves.each do |move|
+        break if @target.visited == true
+
+        new_longitude = @piece.longitude + move[0]
+        new_latitude = @piece.latitude + move[1]
+        next_tile = find_tile(new_longitude, new_latitude)
+
+        next unless valid_move?(new_longitude, new_latitude) && next_tile.visited == false
+
+        update_position(new_longitude, new_latitude)
+      end
     end
+    # display_rows
   end
 end
 
