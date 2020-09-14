@@ -21,9 +21,6 @@ module BoardMethods
     @root = [@piece.longitude, @piece.latitude]
     @target = @board.rows[8 - latitude][longitude - 1]
     @target_coordinate = target_coordinate(longitude, latitude)
-    @current_tile = @board.rows[8 - @piece.latitude][@piece.longitude - 1]
-    puts "Target Coordinate: #{@target_coordinate}"
-    search_route
   end
 
   def move_piece(new_longitude, new_latitude)
@@ -59,15 +56,10 @@ module BoardMethods
   end
 
   def update_position(longitude, latitude)
-    # puts "Target Coordinate: #{@target_coordinate}"
-    puts "Target Distance: #{target_distance}"
-    puts "- Knight\nLongitude: #{@piece.longitude}\nLatitude: #{@piece.latitude}"
     # empty_tile
     @piece.longitude = longitude
     @piece.latitude = latitude
     @board.rows[8 - latitude][longitude - 1].data = @piece.data
-    @board.rows[8 - latitude][longitude - 1].visited = true
-    @board.rows[8 - latitude][longitude - 1].parent = @piece
     @board.print_board
   end
 
@@ -77,7 +69,12 @@ module BoardMethods
     @piece.possible_moves.each do |move|
       return true if move[0] == (new_longitude - @piece.longitude) && move[1] == (new_latitude - @piece.latitude)
     end
-    false
+  end
+
+  def letter_to_number(letter)
+    @board.board_letters.each_with_index do |board_letter, index|
+      return index + 1 if board_letter == letter
+    end
   end
 
   def number_to_letter(number)
@@ -89,7 +86,7 @@ module BoardMethods
   def find_tile(longitude, latitude)
     @board.rows.each do |row|
       row.each do |el|
-        return el if el.x_coordinate == number_to_letter(longitude) && el.y_coordinate == latitude
+        return el if el.longitude == number_to_letter(longitude) && el.latitude == latitude
       end
     end
   end

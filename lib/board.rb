@@ -66,8 +66,8 @@ class Board
     @rows.each do |row|
       i = 0
       row.each do |el|
-        el.x_coordinate = @board_letters[i]
-        el.y_coordinate = j
+        el.longitude = @board_letters[i]
+        el.latitude = j
         i += 1
       end
       j -= 1
