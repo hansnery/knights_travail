@@ -3,7 +3,8 @@
 # :nodoc:
 class Board
   require_relative 'tile'
-  require 'colorize'
+  # require 'colorize'
+  require './.bundle/ruby/2.5.0/gems/colorize-0.8.1/lib/colorize'
 
   attr_accessor :board, :target, :rows, :board_letters
 
