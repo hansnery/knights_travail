@@ -1,6 +1,6 @@
 # The Odin Project
 # Project: Knights Travails
-The Knights Travail is a problem in finding the shortest path between two squares on a chess board as travelled by a knight. This uses a uniform cost search - basically a breadth first search with each move on the chess board being having an equal cost, so the shortest path will always have the least number of moves.
+The Knights Travail is a problem in finding the shortest path between two squares on a chess board as travelled by a knight. This uses a uniform cost search - basically a breadth first search with each move on the chess board having an equal cost, so the shortest path will always have the least number of moves.
 ## The Assignment
 <p float = 'left'>
   <img src="https://user-images.githubusercontent.com/19158296/208352041-971371a7-c8aa-49bc-86a4-3135a06318c4.jpg" alt="Knight-Travails-Introduction" width="500" height="300">
